@@ -1,4 +1,4 @@
-- Implementation of "Efficiently Evolving Programs through the Search for Novelty" with some modification. 
+- Implementation of "Efficiently Evolving Programs through the Search for Novelty" with some modifications. 
 
 - There are four files that you can run:
 1. easy_maze_novelty.py (to run: python easy_maze_novelty.py)
