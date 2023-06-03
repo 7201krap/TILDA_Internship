@@ -1,5 +1,4 @@
-- Implementation of "Efficiently Evolving Programs through the Search for Novelty" by Joel Lehman and 
-Kenneth O. Stanley with some modifications. 
+### Implementation of "Efficiently Evolving Programs through the Search for Novelty" by Joel Lehman and Kenneth O. Stanley with some modifications. 
 - In the paper, it says "... It is important to note that this conception of novelty is the same as it was in 
 neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
 
@@ -9,8 +8,7 @@ neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
 3. hard_maze_novelty.py (to run: python hard_maze_novelty.py)
 4. hard_maze_original.py (to run: python hard_maze_original.py)
 
-It is easy to catch the difference between 'novelty' and 'orignal' by running the 3rd and 4th file.
-
+- It is easy to catch the difference between 'novelty' and 'orignal' by running the 3rd and 4th file.
 - To see only the results, see folder 'results'
 - More details will be added soon 
 - Last update (2023-06-02)
