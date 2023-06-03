@@ -13,6 +13,7 @@ genotype is represented by a vector of possible actions where the actions
 are 'L = turn left', 'R = turn right', 'M = move forward'. 
 For example a single agent's genotype is represented by the following:
 ['R', 'M', 'M', 'L', 'R', 'M', 'L', 'M', 'M'].
+- Nevertheless, my implementation contains the main idea which is using the novelty for fitness and choosing offsprings based on the novelty.
 - There are four files that you can run:
   1. easy_maze_novelty.py (to run: python easy_maze_novelty.py)
      1. Final agent positions<br>
