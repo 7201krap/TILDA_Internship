@@ -3,10 +3,10 @@
 neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
 
 - There are four files that you can run:
-1. easy_maze_novelty.py (to run: python easy_maze_novelty.py)
-2. easy_maze_original.py (to run: python easy_maze_original.py)
-3. hard_maze_novelty.py (to run: python hard_maze_novelty.py)
-4. hard_maze_original.py (to run: python hard_maze_original.py)
+  1. easy_maze_novelty.py (to run: python easy_maze_novelty.py)
+  2. easy_maze_original.py (to run: python easy_maze_original.py)
+  3. hard_maze_novelty.py (to run: python hard_maze_novelty.py)
+  4. hard_maze_original.py (to run: python hard_maze_original.py)
 
 - It is easy to catch the difference between 'novelty' and 'orignal' by running the 3rd and 4th file.
 - To see only the results, see folder 'results'
