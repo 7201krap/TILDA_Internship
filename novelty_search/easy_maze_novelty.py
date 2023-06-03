@@ -83,60 +83,6 @@ agent_direction = RIGHT
 first_run = True
 
 
-def plot_agent_positions(positions):
-    """
-    :param positions: the current population's coordinates with shape (num_individuals, 2)
-    :return: a plot depicts final positions
-    """
-    maze = np.ones((20, 20))
-
-    # Add a 'ㄷ' shaped wall around the goal (0)
-    maze[9:12, 8] = 0
-    maze[9:12, 12] = 0
-    maze[9, 8:12] = 0
-
-    # Set the starting point and goal position
-    agent_position = [0, 0]
-    goal_position = [10, 10]
-
-    # Create a copy of the maze to modify
-    maze_copy = np.copy(maze)
-
-    # Define the color mapping
-    cmap = ListedColormap(['black', 'white', 'red', 'green'])
-
-    # Count the agent's positions
-    counts = np.zeros_like(maze, dtype=float)
-    for position in positions:
-        counts[position[0]][position[1]] += 1
-
-    # Normalize the counts to range between 0 and 1
-    max_count = np.max(counts)
-    if max_count > 0:
-        counts /= max_count
-
-    # Set the starting point to be the agent
-    maze_copy[agent_position[0]][agent_position[1]] = 2
-
-    # Set the center point to be the goal
-    maze_copy[goal_position[0]][goal_position[1]] = 3
-
-    # Create the figure and display the maze
-    fig, ax1 = plt.subplots(figsize=(10, 10))
-    _ = ax1.imshow(maze_copy, cmap=cmap)
-
-    # Overlay the agent positions with varying opacities
-    for i in range(maze_copy.shape[0]):
-        for j in range(maze_copy.shape[1]):
-            if counts[i, j] > 0:
-                ax1.scatter(j, i, color='red', alpha=counts[i, j])
-
-    # Hide the gridlines
-    ax1.grid(False)
-
-    plt.show(block=False)
-
-
 # Function to update the agent's position
 def update_agent_position():
     """
@@ -361,7 +307,62 @@ def plot_history(generations, best_paths):
     ax.set_xlabel('Generations')
     ax.set_ylabel('Best distance')
     ax.set_title('Easy maze with novelty')
+    plt.savefig('results/easy maze novelty history')
     plt.show()
+
+
+def plot_agent_positions(positions):
+    """
+    :param positions: the current population's coordinates with shape (num_individuals, 2)
+    :return: a plot depicts final positions
+    """
+    maze = np.ones((20, 20))
+
+    # Add a 'ㄷ' shaped wall around the goal (0)
+    maze[9:12, 8] = 0
+    maze[9:12, 12] = 0
+    maze[9, 8:12] = 0
+
+    # Set the starting point and goal position
+    agent_position = [0, 0]
+    goal_position = [10, 10]
+
+    # Create a copy of the maze to modify
+    maze_copy = np.copy(maze)
+
+    # Define the color mapping
+    cmap = ListedColormap(['black', 'white', 'red', 'green'])
+
+    # Count the agent's positions
+    counts = np.zeros_like(maze, dtype=float)
+    for position in positions:
+        counts[position[0]][position[1]] += 1
+
+    # Normalize the counts to range between 0 and 1
+    max_count = np.max(counts)
+    if max_count > 0:
+        counts /= max_count
+
+    # Set the starting point to be the agent
+    maze_copy[agent_position[0]][agent_position[1]] = 2
+
+    # Set the center point to be the goal
+    maze_copy[goal_position[0]][goal_position[1]] = 3
+
+    # Create the figure and display the maze
+    fig, ax1 = plt.subplots(figsize=(10, 10))
+    _ = ax1.imshow(maze_copy, cmap=cmap)
+
+    # Overlay the agent positions with varying opacities
+    for i in range(maze_copy.shape[0]):
+        for j in range(maze_copy.shape[1]):
+            if counts[i, j] > 0:
+                ax1.scatter(j, i, color='red', alpha=counts[i, j])
+
+    # Hide the gridlines
+    ax1.grid(False)
+    plt.savefig('results/easy maze novelty final agent pos')
+    plt.show(block=False)
 
 
 if __name__ == '__main__':

@@ -134,6 +134,7 @@ def plot_agent_positions(positions):
     # Hide the gridlines
     ax1.grid(False)
 
+    plt.savefig('results/easy maze original final agent pos')
     plt.show(block=False)
 
 
@@ -354,6 +355,7 @@ def plot_history(generations, best_paths):
     ax.set_xlabel('Generations')
     ax.set_ylabel('Best distance')
     ax.set_title('Easy maze with original')
+    plt.savefig('results/easy maze original final history')
     plt.show()
 
 
