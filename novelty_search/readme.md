@@ -1,5 +1,5 @@
 ### Implementation of "Efficiently Evolving Programs through the Search for Novelty" by Joel Lehman and Kenneth O. Stanley with some modifications. 
-- In the paper, authors noted that "... It is important to note that this conception 
+- In the paper, the authors noted that "... It is important to note that this conception 
 of novelty is the same as it was in neuroevolution 
 (i.e. rewarding novel behaviors, not novel genotypes) ...".
 I'm actually not sure about the true meaning of 'novel behaviors'. 
