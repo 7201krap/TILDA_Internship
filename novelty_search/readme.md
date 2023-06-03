@@ -24,7 +24,5 @@ neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
      2. Hard maze original history<br>
         ![hard maze original history](results/hard%20maze%20original%20history.png)
 
-- It is easy to catch the difference between 'novelty' and 'orignal' by running the 3rd and 4th file.
-- To see only the results, see folder 'results'
-- More details will be added soon 
-- Last update (2023-06-02)
+- It is easy to catch the difference between 'novelty' and 'original' by running the 3rd and 4th file.
+- Last update (2023-06-03)
