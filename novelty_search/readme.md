@@ -12,7 +12,7 @@ neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
      1. Easy maze original final agent positions <br>
         ![easy maze original final agent positions](results/easy%20maze%20original%20final%20agent%20pos.png)
      2. Easy maze original history<br>
-        !easy maze original history](results/easy%20maze%20original%20final%20history.png)
+        ![easy maze original final agent positions](results/easy%20maze%20original%20final%20history.png)
   3. hard_maze_novelty.py (to run: python hard_maze_novelty.py)
      1. Hard maze novelty final agent positions<br>
         ![hard maze novelty final agent positions](results/hard%20maze%20novelty%20final%20agent%20pos.png)
