@@ -5,7 +5,7 @@ neuroevolution (i.e. rewarding novel behaviors, not novel genotypes) ..."
 - There are four files that you can run:
   1. easy_maze_novelty.py (to run: python easy_maze_novelty.py)
      1. Easy maze novelty final agent positions
-        ![easy maze novelty final agent positions](results/easy%20maze%20novelty%20final%20agent%20pos.png)
+        <!-- ![easy maze novelty final agent positions](results/easy%20maze%20novelty%20final%20agent%20pos.png) -->
         <img src="results/easy%20maze%20novelty%20final%20agent%20pos.png" alt="Alt Text" width="300" height="200">
      2. Easy maze novelty history
         ![easy maze novelty history](results/easy%20maze%20novelty%20history.png)
