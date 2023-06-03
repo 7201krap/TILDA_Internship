@@ -423,8 +423,8 @@ if __name__ == '__main__':
     print("Initial population generated:", population.shape)
 
     if file_saved:
-        accumulated_coordinates = np.load('hard_coordinates_accumulator_novelty.npy')
-        accumulated_best_path = np.load('hard_best_path_novelty.npy')
+        accumulated_coordinates = np.load('npy_files/hard_coordinates_accumulator_novelty.npy')
+        accumulated_best_path = np.load('npy_files/hard_best_path_novelty.npy')
         last_gen_coordinates = accumulated_coordinates[-1]
         plot_agent_positions(last_gen_coordinates)
         plot_history(num_generations, accumulated_best_path)
@@ -468,8 +468,8 @@ if __name__ == '__main__':
             population = copy.deepcopy(mutated_new_population)
 
         coordinates_accumulator = np.array(coordinates_accumulator)
-        np.save('hard_coordinates_accumulator_novelty.npy', coordinates_accumulator)
-        np.save('hard_best_path_novelty.npy', best_path_accumulator)
+        np.save('npy_files/hard_coordinates_accumulator_novelty.npy', coordinates_accumulator)
+        np.save('npy_files/hard_best_path_novelty.npy', best_path_accumulator)
 
 
 
