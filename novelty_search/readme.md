@@ -11,7 +11,7 @@ behavior1(=action1) for condition1, behavior2(=action2) for condition2, and so o
 incorporate the actual meaning of 'behaviors', since the agent(=red square)'s 
 genotype is represented by a vector of possible actions where the actions 
 are 'L = turn left', 'R = turn right', 'M = move forward'. 
-For example a single agent's genotype is represented by the following:
+For example, a single agent's genotype is represented by the following:
 ['R', 'M', 'M', 'L', 'R', 'M', 'L', 'M', 'M'].
 - Nevertheless, my implementation contains the main idea which is using the novelty for fitness and choosing offsprings based on the novelty.
 - There are four files that you can run:
