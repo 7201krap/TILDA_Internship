@@ -17,15 +17,33 @@ import torch.nn.functional as F
 import torch.nn.init as init
 import random
 import statistics
-import time 
+import time
 
 from torch import nn
 from tqdm import tqdm
-from scipy.optimize import minimize_scalar
 
+import os
 
-# In[2]:
+# Set a seed value:
+seed_value= 0
 
+# 1. Set `PYTHONHASHSEED` environment variable at a fixed value
+os.environ['PYTHONHASHSEED']=str(seed_value)
+
+# 2. Set `python` built-in pseudo-random generator at a fixed value
+random.seed(seed_value)
+
+# 3. Set `numpy` pseudo-random generator at a fixed value
+np.random.seed(seed_value)
+
+# 4. Set `pytorch` pseudo-random generator at a fixed value
+torch.manual_seed(seed_value)
+
+# 6. If you have cuDNN library installed, you should also set its random generator at a fixed value:
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+
+env = gym.make("LunarLander-v2")
 
 class PolicyNetwork(nn.Module):
     def __init__(self, input_dim, output_dim):
@@ -44,6 +62,7 @@ class PolicyNetwork(nn.Module):
         return x
     
     def act(self, state):
+        print(f"Performing an optimal action for state: {state}")
         state_t = torch.as_tensor(state, dtype=torch.float32)
         q_values = self.forward(state_t.unsqueeze(0))  
         max_q_index = torch.argmax(q_values, dim=1)[0]   
@@ -79,7 +98,7 @@ def calculate_fitness(network, env, num_episodes):
     return avg_reward
 
 def run_episode(network, env):
-    state = env.reset()
+    state = env.reset(seed=seed_value)
     total_reward = 0.0
     done = False
     while not done:
@@ -100,7 +119,7 @@ def tournament_selection(population, fitnesses, tournament_size):
 
 def perturb_parameters(network, weight_clip, n_episodes):
     for episode in range(n_episodes):
-        state = env.reset()
+        state = env.reset(seed=seed_value)
         done = False
         total_reward = 0
         current_output = None
@@ -125,7 +144,7 @@ def perturb_parameters(network, weight_clip, n_episodes):
 
             gradient = torch.cat([param.grad.view(-1) for param in network.parameters()])
 
-            gradient /= ((gradient**2).sum() + 1e-10)
+            gradient /= torch.sqrt(((gradient**2).sum() + 1e-10))
 
             perturbation = np.clip(delta * gradient, -weight_clip, weight_clip)
             new_param = current_param + perturbation
@@ -136,15 +155,28 @@ def perturb_parameters(network, weight_clip, n_episodes):
             state, reward, done, _ = env.step(action)
 
 
-# In[4]:
+def visualize_best_individual(network, env):
+    state = env.reset(seed=seed_value)
+    done = False
+    total_reward = 0
+    count = 0
+    while not done:
+        print(f"Alive for {count} actions")
+        env.render()  # Render the environment to the screen
+        action = network.act(state)
+        state, reward, done, _ = env.step(action)
+        total_reward += reward
+        count = count + 1
+    print(f"Total reward: {total_reward}")
+    env.close()
 
 
 # Constants
 POPULATION_SIZE = 200 
-GENERATIONS = 150
+GENERATIONS = 300
 ELITISM = int(POPULATION_SIZE * 0.4)
 TOURNAMENT_SIZE = 5
-WEIGHT_CLIP = 0.5
+WEIGHT_CLIP = 0.2
 INPUT_DIM = 8  # For LunarLander environment
 OUTPUT_DIM = 4  # For LunarLander environment
 MAX_EP = 1
@@ -152,122 +184,68 @@ MAX_EP = 1
 FITNESS_HISTORY = list()
 FITNESS_STDERROR_HISTORY = list()
 
-env = gym.make("LunarLander-v2")
-
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
+first_run = True
 
-# In[5]:
+if first_run:
+    start_time = time.time()
 
+    for generation in range(GENERATIONS):
+        print(f"[Generation {generation}]")
+        fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population)]
+        avg_fitness = np.average(fitnesses)
+        max_fitness = np.max(fitnesses)
+        min_fitness = np.min(fitnesses)
+        FITNESS_HISTORY.append([avg_fitness, max_fitness, min_fitness])
+        standard_deviation = statistics.stdev(fitnesses)
+        standard_error = standard_deviation / (POPULATION_SIZE ** 0.5)
+        FITNESS_STDERROR_HISTORY.append(standard_error)
+        print(f"Average Fitness: {avg_fitness} \n Best Fitness: {max_fitness} \n Worst Fitness: {min_fitness} \n Standard Error: {standard_error}")
 
-start_time = time.time()
+        survivors = select_survivors(population, fitnesses, ELITISM)
 
+        next_population = survivors
 
-# In[6]:
+        for _ in tqdm(range(POPULATION_SIZE - len(survivors))):
+            parent = tournament_selection(population, fitnesses, TOURNAMENT_SIZE)
+            offspring = copy.deepcopy(parent)
+            perturb_parameters(offspring, WEIGHT_CLIP, MAX_EP)
+            next_population.append(offspring)
 
+        population = next_population
 
-for generation in range(GENERATIONS):
-    print(f"[Generation {generation}]")
-    
-    print("Calculating Fitnesses For Population ...")
-    fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population)]
-    
-    avg_fitness = np.average(fitnesses)
-    max_fitness = np.max(fitnesses)
-    min_fitness = np.min(fitnesses)
-    FITNESS_HISTORY.append([avg_fitness, max_fitness, min_fitness])
-    
-    standard_deviation = statistics.stdev(fitnesses)
-    standard_error = standard_deviation / (POPULATION_SIZE ** 0.5)
-    FITNESS_STDERROR_HISTORY.append(standard_error)
-    
-    print(f"Average Fitness: {avg_fitness} \n Best Fitness: {max_fitness} \n Worst Fitness: {min_fitness} \n Standard Error: {standard_error}")
+    print("--- %s seconds ---" % (time.time() - start_time))
 
-    survivors = select_survivors(population, fitnesses, ELITISM)
+    plt.figure(figsize=(10, 6))
+    plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0], marker='o', linestyle='-', label='Average Fitness')
+    plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,1], marker='^', linestyle='-', label='Max Fitness')
+    plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,2], marker='s', linestyle='-', label='Min Fitness')
+    plt.fill_between(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0] - np.array(FITNESS_STDERROR_HISTORY), np.array(FITNESS_HISTORY)[:,0] + np.array(FITNESS_STDERROR_HISTORY),
+                     alpha=0.2, color='blue', label='Standard Error')
 
-    next_population = survivors  
+    plt.xlabel('Generations')
+    plt.ylabel('Fitness')
+    plt.title('Fitness History of LunarLander SM-G-FO Mutation')
+    plt.grid()
+    plt.legend()
+    plt.ylim(top=500)
+    plt.savefig('../results/lunarlander ga sm-g-fo')
+    plt.show()
 
-    for _ in tqdm(range(POPULATION_SIZE - len(survivors))):
-        parent = tournament_selection(population, fitnesses, TOURNAMENT_SIZE)
-        offspring = copy.deepcopy(parent)
-        perturb_parameters(offspring, WEIGHT_CLIP, MAX_EP)
-        next_population.append(offspring)
+    # save the best model
+    fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population, desc="Calculating fitnesses")]
+    population = [x for _, x in sorted(zip(fitnesses, population), key=lambda pair: pair[0], reverse=True)]
+    best_network = population[0]
+    torch.save(best_network.state_dict(), '../results/lunarlander_gaO_smg-fo.pth')
 
-    population = next_population
+else:
+    # load the best model
+    # First, you have to create an instance of the same model architecture
+    new_network = PolicyNetwork(INPUT_DIM, OUTPUT_DIM)
 
+    # Then you can load the weights
+    new_network.load_state_dict(torch.load('../results/lunarlander_gaO_smg-fo.pth'))
 
-# In[7]:
-
-
-print("--- %s seconds ---" % (time.time() - start_time))
-
-
-# In[8]:
-
-
-plt.figure(figsize=(20, 15))
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0], marker='o', linestyle='-', label='Average Fitness')
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,1], marker='^', linestyle='-', label='Max Fitness')
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,2], marker='s', linestyle='-', label='Min Fitness')
-plt.fill_between(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0] - np.array(FITNESS_STDERROR_HISTORY), np.array(FITNESS_HISTORY)[:,0] + np.array(FITNESS_STDERROR_HISTORY),
-                 alpha=0.2, color='blue', label='Standard Error')
-
-plt.xlabel('Generations')
-plt.ylabel('Fitness')
-plt.title('Fitness History')
-plt.grid()
-plt.legend()
-plt.show()
-
-
-# In[9]:
-
-
-plt.figure(figsize=(20, 15))
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0], marker='o', linestyle='-', label='Average Fitness')
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,1], marker='^', linestyle='-', label='Max Fitness')
-plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,2], marker='s', linestyle='-', label='Min Fitness')
-plt.fill_between(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0] - np.array(FITNESS_STDERROR_HISTORY), np.array(FITNESS_HISTORY)[:,0] + np.array(FITNESS_STDERROR_HISTORY),
-                 alpha=0.2, color='blue', label='Standard Error')
-
-plt.xlabel('Generations')
-plt.ylabel('Fitness')
-plt.ylim([-1000, 500])
-plt.title('Fitness History')
-plt.grid()
-plt.legend()
-plt.show()
-
-
-# ### Visualization
-
-# In[10]:
-
-
-def visualize_best_individual(network, env):
-    state = env.reset()
-    done = False
-    total_reward = 0
-    while not done:
-        env.render()  # Render the environment to the screen
-        action = network.act(state)
-        state, reward, done, _ = env.step(action)
-        total_reward += reward
-    print(f"Total reward: {total_reward}")
-    env.close()
-
-
-# In[12]:
-
-
-fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population, desc="Calculating fitnesses")]
-population = [x for _, x in sorted(zip(fitnesses, population), key=lambda pair: pair[0], reverse=True)]
-best_individual = population[0]
-visualize_best_individual(best_individual, env)
-
-
-# In[ ]:
-
-
-
+    visualize_best_individual(new_network, env)
 
