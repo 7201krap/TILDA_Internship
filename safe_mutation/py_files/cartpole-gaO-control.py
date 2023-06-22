@@ -199,7 +199,7 @@ def main(POPULATION_SIZE, GENERATIONS, ELITISM, TOURNAMENT_SIZE, MUTATION_STRENG
 import sys
 import pygame
 
-first_run = True
+first_run = False
 
 def visualize_best_individual(network, env):
     state = env.reset(seed=seed_value)

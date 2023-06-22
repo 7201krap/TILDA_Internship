@@ -215,7 +215,7 @@ import pygame
 
 # ### Version Control
 
-first_run = True
+first_run = False
 
 if first_run == True:
     population, history, history_std = main(POPULATION_SIZE=pop_size,
