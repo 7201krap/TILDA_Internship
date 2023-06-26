@@ -102,16 +102,10 @@ def run_episode(network, env):
     log_probs = []  # Store log probabilities of actions
     done = False
     while not done:
-        state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = network(state_t.unsqueeze(0))
-        action_probs = nn.functional.softmax(q_values, dim=1)
-        action_dist = torch.distributions.Categorical(action_probs)
-        action = action_dist.sample()
-        log_prob = action_dist.log_prob(action)
-        log_probs.append(log_prob)
-        state, reward, done, _ = env.step(action.item())
+        action = torch.argmax(network(torch.from_numpy(state).float().unsqueeze(0))).item()
+        state, reward, done, _ = env.step(action)
         total_reward += reward
-    return total_reward, log_probs
+    return total_reward, _
 
 
 # In[6]:
@@ -215,7 +209,7 @@ import pygame
 
 # ### Version Control
 
-first_run = False
+first_run = True
 
 if first_run == True:
     population, history, history_std = main(POPULATION_SIZE=pop_size,
@@ -241,7 +235,6 @@ if first_run == True:
     plt.title('Fitness History of LunarLander Classic Mutation')
     plt.grid()
     plt.legend()
-    plt.ylim(top=500)
     plt.savefig('../results/lundarlander ga control')
     plt.show()
 

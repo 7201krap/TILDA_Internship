@@ -229,7 +229,6 @@ if first_run:
     plt.title('Fitness History of LunarLander SM-G-FO Mutation')
     plt.grid()
     plt.legend()
-    plt.ylim(top=500)
     plt.savefig('../results/lunarlander ga sm-g-fo')
     plt.show()
 

@@ -212,7 +212,7 @@ FITNESS_STDERROR_HISTORY = list()
 
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = False
+first_run = True
 
 if first_run:
     start_time = time.time()
@@ -255,7 +255,6 @@ if first_run:
     plt.title('Fitness History of LunarLander SM-G-SUM Mutation')
     plt.grid()
     plt.legend()
-    plt.ylim(top=500)
     plt.savefig('../results/lunarlander ga sm-g-sum')
     plt.show()
 

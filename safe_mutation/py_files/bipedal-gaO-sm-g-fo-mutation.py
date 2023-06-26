@@ -43,31 +43,28 @@ torch.manual_seed(seed_value)
 torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 
-env = gym.make("LunarLander-v2")
+env = gym.make('BipedalWalker-v3')
 
 class PolicyNetwork(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(PolicyNetwork, self).__init__()
-        self.fc1 = nn.Linear(input_dim, 128)  
+        self.fc1 = nn.Linear(input_dim, 128)  # BipedalWalker has 24 inputs
         self.fc2 = nn.Linear(128, 64)
-        self.fc3 = nn.Linear(64, output_dim)  
+        self.fc3 = nn.Linear(64, output_dim)  # BipedalWalker has 4 actions
 
-        # Apply the weights initialization
         self.apply(self.init_weights)
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        x = self.fc3(x)
+        x = torch.tanh(self.fc3(x))  # tanh to keep output in [-1, 1]
         return x
-    
+
     def act(self, state):
         print(f"Performing an optimal action for state: {state}")
         state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = self.forward(state_t.unsqueeze(0))  
-        max_q_index = torch.argmax(q_values, dim=1)[0]   
-        action = max_q_index.detach().item()   
-        return action  
+        q_values = self.forward(torch.from_numpy(state_t)).detach().numpy()
+        return q_values
 
     def init_weights(self, m):
         if type(m) == nn.Linear:
@@ -100,9 +97,10 @@ def calculate_fitness(network, env, num_episodes):
 def run_episode(network, env):
     state = env.reset(seed=seed_value)
     total_reward = 0.0
+    log_probs = []  # Store log probabilities of actions
     done = False
     while not done:
-        action = torch.argmax(network(torch.from_numpy(state).float().unsqueeze(0))).item()
+        action = network(torch.from_numpy(state)).detach().numpy()
         state, reward, done, _ = env.step(action)
         total_reward += reward
     return total_reward, _
@@ -117,66 +115,41 @@ def tournament_selection(population, fitnesses, tournament_size):
     winner_index = selected_indices[np.argmax(selected_fitnesses)]
     return population[winner_index]
 
-
 def perturb_parameters(network, weight_clip, n_episodes):
     for episode in range(n_episodes):
-        # Reset the environment
         state = env.reset(seed=seed_value)
         done = False
         total_reward = 0
         current_output = None
 
         while not done:
-
             if episode == 0 and current_output is None:
                 prev_output = torch.Tensor([0.25, 0.25, 0.25, 0.25])
             else:
                 prev_output = current_output.detach()
 
-            # Get the original parameters
             current_param = torch.cat([param.view(-1) for param in network.parameters()])
 
-            # Perturb the model parameters
             delta = torch.randn_like(current_param)
-            direction = delta / torch.sqrt((delta ** 2).sum())
-            direction_t = direction.detach()
 
-            # Forward pass to calculate the output
             current_output = network(torch.from_numpy(state).float().unsqueeze(0))
 
-            # Calculate the error
-            error = ((current_output - prev_output) ** 2).mean()
+            error = ((current_output - prev_output)**2).mean()
 
-            # Clear the gradients from the last backward pass
             network.zero_grad()
 
-            # Backward pass to calculate the gradients
-            # Set create_graph=True to allow higher order derivative
-            error.backward(create_graph=True)
+            error.backward()
 
-            # Extract the gradients
             gradient = torch.cat([param.grad.view(-1) for param in network.parameters()])
 
-            # Calculate the gradient vector product
-            grad_v_prod = (gradient * direction_t).sum()
+            gradient /= torch.sqrt(((gradient**2).sum() + 1e-10))
 
-            second_order_grad = torch.autograd.grad(grad_v_prod, network.parameters())
-            second_order_grad = torch.cat([grad.view(-1) for grad in second_order_grad])
-
-            sensitivity = second_order_grad
-            scaling = torch.sqrt(torch.abs(sensitivity))
-
-            # Normalize the gradients
-            so_gradient = (gradient / (scaling + 1e-10)).detach()
-
-            # Calculate the new parameters
-            perturbation = np.clip(delta * so_gradient, -weight_clip, weight_clip)
+            perturbation = np.clip(delta * gradient, -weight_clip, weight_clip)
             new_param = current_param + perturbation
 
-            # Inject the new parameters into the model
             network.inject_parameters(new_param.detach().numpy())
 
-            action = torch.argmax(network(torch.from_numpy(state).float().unsqueeze(0))).item()
+            action = network(torch.from_numpy(state)).detach().numpy()
             state, reward, done, _ = env.step(action)
 
 
@@ -202,8 +175,8 @@ GENERATIONS = 300
 ELITISM = int(POPULATION_SIZE * 0.4)
 TOURNAMENT_SIZE = 5
 WEIGHT_CLIP = 0.2
-INPUT_DIM = 8  # For LunarLander environment
-OUTPUT_DIM = 4  # For LunarLander environment
+INPUT_DIM = 24
+OUTPUT_DIM = 4
 MAX_EP = 1
 
 FITNESS_HISTORY = list()
@@ -251,17 +224,17 @@ if first_run:
 
     plt.xlabel('Generations')
     plt.ylabel('Fitness')
-    plt.title('Fitness History of LunarLander SM-G-SO Mutation')
+    plt.title('Fitness History of Bipedal SM-G-FO Mutation')
     plt.grid()
     plt.legend()
-    plt.savefig('../results/lunarlander ga sm-g-so')
+    plt.savefig('../results/bipedal ga sm-g-fo')
     plt.show()
 
     # save the best model
     fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population, desc="Calculating fitnesses")]
     population = [x for _, x in sorted(zip(fitnesses, population), key=lambda pair: pair[0], reverse=True)]
     best_network = population[0]
-    torch.save(best_network.state_dict(), '../results/lunarlander_gaO_smg-so.pth')
+    torch.save(best_network.state_dict(), '../results/bipedal_gaO_smg-fo.pth')
 
 else:
     # load the best model
@@ -269,7 +242,7 @@ else:
     new_network = PolicyNetwork(INPUT_DIM, OUTPUT_DIM)
 
     # Then you can load the weights
-    new_network.load_state_dict(torch.load('../results/lunarlander_gaO_smg-so.pth'))
+    new_network.load_state_dict(torch.load('../results/bipedal_gaO_smg-fo.pth'))
 
     visualize_best_individual(new_network, env)
 
