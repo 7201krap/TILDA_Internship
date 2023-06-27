@@ -56,28 +56,40 @@ MAX_EP = 1
 
 
 class PolicyNetwork(nn.Module):
-    def __init__(self, input_dim, output_dim):
+    def __init__(self, input_dim=1, output_dim=4):
         super(PolicyNetwork, self).__init__()
 
-        self.fc1 = nn.Linear(input_dim, 36)
-        self.fc2 = nn.Linear(36, 72)
-        self.fc3 = nn.Linear(72, 36)
-        self.fc4 = nn.Linear(36, output_dim)
+        self.hidden_dim_lstm = 128
+        self.hidden_dim_fffn = 64
 
-        self.dropout = nn.Dropout(p=0.2)
+        # Define the LSTM layer
+        self.lstm = nn.LSTM(input_dim, self.hidden_dim_lstm, num_layers=1, batch_first=True)
 
-        # Apply the weights initialization
+        # Define the FFFN layers
+        self.ffn = nn.Sequential(
+            nn.Linear(self.hidden_dim_lstm, self.hidden_dim_fffn),
+            nn.ReLU(),
+            nn.Linear(self.hidden_dim_fffn, output_dim)
+        )
+
+        # Initialize weights
         self.apply(self.init_weights)
 
     def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = F.relu(self.fc2(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = F.relu(self.fc3(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = self.fc4(x)
-        return x
+        # Initial hidden state for LSTM
+        h0 = torch.zeros(1, 1, self.hidden_dim_lstm)
+        c0 = torch.zeros(1, 1, self.hidden_dim_lstm)
+
+        # LSTM layer
+        out, _ = self.lstm(x.view(1, -1, 1), (h0, c0))
+
+        # Taking the last output of the LSTM
+        out = out[:, -1, :]
+
+        # FFFN layer
+        out = self.ffn(out)
+
+        return out
 
     def init_weights(self, m):
         if isinstance(m, nn.Linear):
@@ -86,7 +98,7 @@ class PolicyNetwork(nn.Module):
 
     def act(self, state):
         state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = self.forward(state_t.reshape(1, int(np.prod(env.observation_space.shape))))
+        q_values = self.forward(state_t)
         action_probs = nn.functional.softmax(q_values, dim=1)
         action_dist = torch.distributions.Categorical(action_probs)
         action = action_dist.sample()
@@ -108,7 +120,7 @@ def run_episode(network, env):
     done = False
     while not done:
         state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = network(state_t.reshape(1, int(np.prod(env.observation_space.shape))))
+        q_values = network(state_t)
         action_probs = nn.functional.softmax(q_values, dim=1)
         action_dist = torch.distributions.Categorical(action_probs)
         action = action_dist.sample()
@@ -147,7 +159,7 @@ def main(POPULATION_SIZE, GENERATIONS, ELITISM, TOURNAMENT_SIZE, MUTATION_STRENG
     FITNESS_STDERROR_HISTORY = list()
 
     # Create initial population
-    population = [PolicyNetwork(9, 4) for _ in range(POPULATION_SIZE)]
+    population = [PolicyNetwork(1, 4) for _ in range(POPULATION_SIZE)]
 
     for generation in range(1, GENERATIONS + 1):
 
@@ -208,9 +220,7 @@ def visualize_best_individual(network, env):
     print(f"Total reward: {total_reward}")
     env.close()
 
-
-first_run = False
-
+first_run = True
 
 if first_run == True:
 

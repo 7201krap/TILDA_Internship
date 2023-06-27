@@ -48,38 +48,49 @@ def seed_setter(seed_value=0):
 
 
 class PolicyNetwork(nn.Module):
-    def __init__(self, input_dim, output_dim):
+    def __init__(self, input_dim=1, output_dim=4):
         super(PolicyNetwork, self).__init__()
 
-        self.fc1 = nn.Linear(input_dim, 36)
-        self.fc2 = nn.Linear(36, 72)
-        self.fc3 = nn.Linear(72, 36)
-        self.fc4 = nn.Linear(36, output_dim)
+        self.hidden_dim_lstm = 128
+        self.hidden_dim_fffn = 64
 
-        self.dropout = nn.Dropout(p=0.2)
+        # Define the LSTM layer
+        self.lstm = nn.LSTM(input_dim, self.hidden_dim_lstm, num_layers=1, batch_first=True)
 
-        # Apply the weights initialization
+        # Define the FFFN layers
+        self.ffn = nn.Sequential(
+            nn.Linear(self.hidden_dim_lstm, self.hidden_dim_fffn),
+            nn.ReLU(),
+            nn.Linear(self.hidden_dim_fffn, output_dim)
+        )
+
+        # Initialize weights
         self.apply(self.init_weights)
 
     def forward(self, x):
-        x = F.relu(self.fc1(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = F.relu(self.fc2(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = F.relu(self.fc3(x))
-        x = self.dropout(x)  # Add dropout layer
-        x = self.fc4(x)
-        return x
+        # Initial hidden state for LSTM
+        h0 = torch.zeros(1, 1, self.hidden_dim_lstm)
+        c0 = torch.zeros(1, 1, self.hidden_dim_lstm)
+
+        # LSTM layer
+        out, _ = self.lstm(x.view(1, -1, 1), (h0, c0))
+
+        # Taking the last output of the LSTM
+        out = out[:, -1, :]
+
+        # FFFN layer
+        out = self.ffn(out)
+
+        return out
 
     def init_weights(self, m):
         if isinstance(m, nn.Linear):
             nn.init.normal_(m.weight, 0, 0.1)
             nn.init.constant_(m.bias, 0)
 
-
     def act(self, state):
         state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = self.forward(state_t.reshape(1, int(np.prod(env.observation_space.shape))))
+        q_values = self.forward(state_t)
         action_probs = nn.functional.softmax(q_values, dim=1)
         action_dist = torch.distributions.Categorical(action_probs)
         action = action_dist.sample()
@@ -116,7 +127,7 @@ def run_episode(network, env):
     done = False
     while not done:
         state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = network(state_t.reshape(1, int(np.prod(env.observation_space.shape))))
+        q_values = network(state_t)
         action_probs = nn.functional.softmax(q_values, dim=1)
         action_dist = torch.distributions.Categorical(action_probs)
         action = action_dist.sample()
@@ -196,7 +207,7 @@ def perturb_parameters(network, weight_clip, n_episodes):
             network.inject_parameters(new_param.detach().numpy())
 
             state_t = torch.as_tensor(state, dtype=torch.float32)
-            q_values = network.forward(state_t.reshape(1, int(np.prod(env.observation_space.shape))))
+            q_values = network.forward(state_t)
             action_probs = nn.functional.softmax(q_values, dim=1)
             action_dist = torch.distributions.Categorical(action_probs)
             action = action_dist.sample()
@@ -228,7 +239,7 @@ GENERATIONS = 50
 ELITISM = int(POPULATION_SIZE * 0.4)
 TOURNAMENT_SIZE = 5
 WEIGHT_CLIP = 0.2
-INPUT_DIM = int(np.prod(env.observation_space.shape))
+INPUT_DIM = 1
 OUTPUT_DIM = env.action_space.n
 MAX_EP = 1
 

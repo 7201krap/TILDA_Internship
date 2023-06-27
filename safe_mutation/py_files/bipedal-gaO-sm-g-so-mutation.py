@@ -62,8 +62,7 @@ class PolicyNetwork(nn.Module):
 
     def act(self, state):
         print(f"Performing an optimal action for state: {state}")
-        state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = self.forward(torch.from_numpy(state_t)).detach().numpy()
+        q_values = self.forward(torch.from_numpy(state)).detach().numpy()
         return q_values
 
     def init_weights(self, m):
@@ -209,7 +208,7 @@ FITNESS_STDERROR_HISTORY = list()
 
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = True
+first_run = False
 
 if first_run:
     start_time = time.time()
