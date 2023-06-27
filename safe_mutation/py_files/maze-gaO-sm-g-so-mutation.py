@@ -183,10 +183,10 @@ def perturb_parameters(network, weight_clip, n_episodes):
             sensitivity = second_order_grad
             scaling = torch.sqrt(torch.abs(sensitivity))
 
-            mask = torch.rand(gradient.shape) < 0.5
+            # mask = torch.rand(gradient.shape) < 0.5
 
             # Normalize the gradients
-            gradient[mask] = (gradient[mask] / (scaling[mask] + 1e-10))
+            gradient = (gradient / (scaling + 1e-10))
 
             # Calculate the new parameters
             perturbation = np.clip(delta * gradient.detach(), -weight_clip, weight_clip)
@@ -239,7 +239,7 @@ FITNESS_STDERROR_HISTORY = list()
 # Creating initial population of networks
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = False
+first_run = True
 
 if first_run == True:
 

@@ -97,9 +97,6 @@ class PolicyNetwork(nn.Module):
         self.load_state_dict(new_state_dict)
 
 
-# In[3]:
-
-
 def calculate_fitness(network, env, num_episodes):
     total_rewards = 0
     for _ in range(num_episodes):
@@ -171,11 +168,11 @@ def perturb_parameters(network, weight_clip, n_episodes):
             # Extract the gradients
             gradient = torch.cat([param.grad.view(-1) for param in network.parameters()])
 
-            # Generate a random mask with 10% True values
-            mask = torch.rand(gradient.shape) < 0.5
+            # # Generate a random mask with 10% True values
+            # mask = torch.rand(gradient.shape) < 0.5
 
             # Apply the operation only to the masked elements
-            gradient[mask] = gradient[mask] / torch.sqrt((gradient[mask] ** 2).sum() + 1e-10)
+            gradient = gradient / torch.sqrt((gradient ** 2).sum() + 1e-10)
 
             # Calculate the new parameters
             perturbation = np.clip(delta * gradient, -weight_clip, weight_clip)

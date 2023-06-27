@@ -170,8 +170,8 @@ def visualize_best_individual(network, env):
 
 
 # Constants
-POPULATION_SIZE = 200 
-GENERATIONS = 300
+POPULATION_SIZE = 150
+GENERATIONS = 150
 ELITISM = int(POPULATION_SIZE * 0.4)
 TOURNAMENT_SIZE = 5
 WEIGHT_CLIP = 0.2

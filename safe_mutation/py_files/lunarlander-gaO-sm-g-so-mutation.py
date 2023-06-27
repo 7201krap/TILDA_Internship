@@ -211,7 +211,7 @@ FITNESS_STDERROR_HISTORY = list()
 
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = True
+first_run = False
 
 if first_run:
     start_time = time.time()

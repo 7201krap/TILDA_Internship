@@ -186,10 +186,10 @@ def perturb_parameters(network, weight_clip, n_episodes):
                 # print("grad_output", grad_output)
                 jacobian[i] = torch.cat([param.grad.view(-1) for param in network.parameters()])
 
-            mask = torch.rand(gradient.shape) < 0.5
+            # mask = torch.rand(gradient.shape) < 0.5
 
             # Normalize the jacobian
-            gradient[mask] = gradient[mask] / torch.sqrt(((jacobian**2).sum() + 1e-10))
+            gradient = gradient / torch.sqrt(((jacobian**2).sum() + 1e-10))
 
             # Calculate the new parameters
             perturbation = np.clip(delta * gradient, -weight_clip, weight_clip)

@@ -50,7 +50,7 @@ torch.backends.cudnn.benchmark = False
 
 # define global variable 
 env = gym.make('BipedalWalker-v3')
-pop_size = 200
+pop_size = 150
 gens = 150
 elit = int(pop_size * 0.4)
 tot_size = 5
@@ -226,7 +226,7 @@ import pygame
 
 # ### Version Control
 
-first_run = False
+first_run = True
 
 if first_run == True:
     population, history, history_std = main(POPULATION_SIZE=pop_size,

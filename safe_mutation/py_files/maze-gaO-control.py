@@ -209,7 +209,7 @@ def visualize_best_individual(network, env):
     env.close()
 
 
-first_run = True
+first_run = False
 
 
 if first_run == True:
