@@ -220,7 +220,7 @@ def visualize_best_individual(network, env):
     print(f"Total reward: {total_reward}")
     env.close()
 
-first_run = True
+first_run = False
 
 if first_run == True:
 

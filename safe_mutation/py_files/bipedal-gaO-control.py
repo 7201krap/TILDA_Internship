@@ -237,7 +237,11 @@ if first_run == True:
                                 MUTATION_RATE=0.01)
 
 
-    # In[9]:
+    # save the best model
+    fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population, desc="Calculating fitnesses")]
+    population = [x for _, x in sorted(zip(fitnesses, population), key=lambda pair: pair[0], reverse=True)]
+    best_network = population[0]
+    torch.save(best_network.state_dict(), '../results/bipedal_gaO_control.pth')
 
 
     plt.figure(figsize=(10, 6))
@@ -254,12 +258,6 @@ if first_run == True:
     plt.legend()
     plt.savefig('../results/bipedal ga control')
     plt.show()
-
-    # save the best model 
-    fitnesses = [calculate_fitness(network, env, MAX_EP) for network in tqdm(population, desc="Calculating fitnesses")]
-    population = [x for _, x in sorted(zip(fitnesses, population), key=lambda pair: pair[0], reverse=True)]
-    best_network = population[0]
-    torch.save(best_network.state_dict(), '../results/bipedal_gaO_control.pth')
 
 else:
     # load the best model

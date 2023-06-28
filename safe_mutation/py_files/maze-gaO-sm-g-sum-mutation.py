@@ -247,7 +247,7 @@ FITNESS_STDERROR_HISTORY = list()
 # Creating initial population of networks
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = True
+first_run = False
 
 if first_run == True:
 

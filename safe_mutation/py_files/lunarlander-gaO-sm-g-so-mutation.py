@@ -123,7 +123,6 @@ def perturb_parameters(network, weight_clip, n_episodes):
         # Reset the environment
         state = env.reset(seed=seed_value)
         done = False
-        total_reward = 0
         current_output = None
 
         while not done:
