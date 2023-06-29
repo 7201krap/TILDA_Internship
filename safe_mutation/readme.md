@@ -49,15 +49,16 @@ There is one additional type of mutation(=SM-G-FO) that I developed:
 
 - I compared Control, SM-G-FO, SM-G-SO, SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker. 
 Advantages of SM-G-X approach over Control could be clearly observable in Cartpole and LunarLander environment. 
-    - Cartpole<br>
+
+1. Cartpole<br>
   
 |            **Cartpole with Control**            |            **Cartpole with SM-G-FO**             |
 |:-----------------------------------------------:|:------------------------------------------------:|
 | ![Image 1](results/cartpole%20ga%20control.png) | ![Image 2](results/cartpole%20ga%20sm-g-fo.png)  |
 |            **Cartpole with SM-G-SO**            |            **Cartpole with SM-G-SUM**            |
 | ![Image 3](results/cartpole%20ga%20sm-g-so.png) | ![Image 4](results/cartpole%20ga%20sm-g-sum.png) |
-  
-  - LunarLander<br>
+
+- LunarLander<br>
 
 |            **LunarLander with Control**             |            **LunarLander with SM-G-FO**             |
 |:---------------------------------------------------:|:---------------------------------------------------:|
@@ -65,7 +66,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |            **LunarLander with SM-G-SO**             |            **LunarLander with SM-G-SUM**            |
 | ![Image 7](results/lunarlander%20ga%20sm-g-so.png)  | ![Image 8](results/lunarlander%20ga%20sm-g-sum.png) |
 
-  - Maze<br>
+2. Maze<br>
 
 |             **Maze with Control**              |             **Maze with SM-G-FO**             |
 |:----------------------------------------------:|:---------------------------------------------:|
@@ -73,7 +74,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |             **Maze with SM-G-SO**              |            **Maze with SM-G-SUM**             |
 | ![Image 11](results/Maze%20ga%20sm-g-so.png)   | ![Image 12](results/maze%20ga%20sm-g-sum.png) |
 
-  - BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
+3. BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
 |                              **BipedalWalker with Control**                              |          **BipedalWalker with SM-G-FO**          |
 |:----------------------------------------------------------------------------------------:|:------------------------------------------------:|
@@ -82,4 +83,4 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |                     ![Image 14](results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/Bipedal%20ga%20sm-g-sum.png) |
 
 
-- Watch the following video for implementation details (lecture delivered in Korean):  
+4. Watch the following video for implementation details (lecture delivered in Korean):  

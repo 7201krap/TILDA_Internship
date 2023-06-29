@@ -60,7 +60,9 @@ class PolicyNetwork(nn.Module):
         super(PolicyNetwork, self).__init__()
 
         self.hidden_dim_lstm = 128
-        self.hidden_dim_fffn = 64
+        self.hidden_dim_fffn = 256
+        self.hidden_dim_fffn2 = 64
+
 
         # Define the LSTM layer
         self.lstm = nn.LSTM(input_dim, self.hidden_dim_lstm, num_layers=1, batch_first=True)
@@ -68,8 +70,10 @@ class PolicyNetwork(nn.Module):
         # Define the FFFN layers
         self.ffn = nn.Sequential(
             nn.Linear(self.hidden_dim_lstm, self.hidden_dim_fffn),
-            nn.ReLU(),
-            nn.Linear(self.hidden_dim_fffn, output_dim)
+            nn.SELU(),
+            nn.Linear(self.hidden_dim_fffn, self.hidden_dim_fffn2),
+            nn.SELU(),
+            nn.Linear(self.hidden_dim_fffn2, output_dim)
         )
 
         # Initialize weights
@@ -220,7 +224,7 @@ def visualize_best_individual(network, env):
     print(f"Total reward: {total_reward}")
     env.close()
 
-first_run = False
+first_run = True
 
 if first_run == True:
 
@@ -242,6 +246,7 @@ if first_run == True:
     plt.fill_between(np.arange(gens), np.array(history)[:, 0] - np.array(history_std),
                      np.array(history)[:, 0] + np.array(history_std),
                      alpha=0.2, color='blue', label='Standard Error')
+    plt.axhline(y=100, color='r', linestyle='-')
 
     plt.xlabel('Generations')
     plt.ylabel('Fitness')

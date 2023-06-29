@@ -52,7 +52,9 @@ class PolicyNetwork(nn.Module):
         super(PolicyNetwork, self).__init__()
 
         self.hidden_dim_lstm = 128
-        self.hidden_dim_fffn = 64
+        self.hidden_dim_fffn = 256
+        self.hidden_dim_fffn2 = 64
+
 
         # Define the LSTM layer
         self.lstm = nn.LSTM(input_dim, self.hidden_dim_lstm, num_layers=1, batch_first=True)
@@ -60,8 +62,10 @@ class PolicyNetwork(nn.Module):
         # Define the FFFN layers
         self.ffn = nn.Sequential(
             nn.Linear(self.hidden_dim_lstm, self.hidden_dim_fffn),
-            nn.ReLU(),
-            nn.Linear(self.hidden_dim_fffn, output_dim)
+            nn.SELU(),
+            nn.Linear(self.hidden_dim_fffn, self.hidden_dim_fffn2),
+            nn.SELU(),
+            nn.Linear(self.hidden_dim_fffn2, output_dim)
         )
 
         # Initialize weights
@@ -304,6 +308,7 @@ if first_run == True:
     plt.plot(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,2], marker='s', linestyle='-', label='Min Fitness')
     plt.fill_between(np.arange(GENERATIONS), np.array(FITNESS_HISTORY)[:,0] - np.array(FITNESS_STDERROR_HISTORY), np.array(FITNESS_HISTORY)[:,0] + np.array(FITNESS_STDERROR_HISTORY),
                      alpha=0.2, color='blue', label='Standard Error')
+    plt.axhline(y=100, color='r', linestyle='-')
 
     plt.xlabel('Generations')
     plt.ylabel('Fitness')

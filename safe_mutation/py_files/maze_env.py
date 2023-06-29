@@ -2,11 +2,8 @@ import gym
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import random
-import torch
 
 from gym import spaces
-import os
 
 class MazeEnv(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -32,10 +29,10 @@ class MazeEnv(gym.Env):
             [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
         ])
 
-
         self.start = (1, 1)
         self.end = (10, 10)
         self.state = self.start
+        self.visited_states = np.zeros(self.maze.shape)
 
         self.done = False
         self.total_steps = 0
@@ -52,20 +49,22 @@ class MazeEnv(gym.Env):
         else:
             raise ValueError("Invalid action")
 
-        reward = -0.1  # default reward for moving to an empty space
+        reward = 0  # default reward for moving to any cell
 
-        # if next state is a wall or outside the maze bounds, don't move and give large negative reward
         if (next_state[0] < 0 or next_state[0] >= self.maze.shape[0] or
                 next_state[1] < 0 or next_state[1] >= self.maze.shape[1] or
                 self.maze[next_state] == -1):
             next_state = self.state
-            reward = -0.2
+            reward = -1  # penalize for hitting the wall
+        elif self.visited_states[next_state] == 0:  # unvisited state
+            self.visited_states[next_state] = 1
+            reward = 1  # reward for exploring a new state
 
-        # if next state is the goal state, the episode is done and give large positive reward
         is_done = (next_state == self.end)
 
         if is_done:
-            reward = 40
+            num_visited_states = np.count_nonzero(self.visited_states)
+            reward = 100 * (num_visited_states / self.total_steps)  # reward function taking into account efficiency
             is_done = True
         elif self.total_steps >= 1000:  # if agent exceeds max steps without reaching the goal
             reward = -20
@@ -80,12 +79,13 @@ class MazeEnv(gym.Env):
         self.start = (1, 1)
         self.end = (10, 10)
         self.state = self.start
+        self.visited_states = np.zeros(self.maze.shape)
 
         self.done = False
         self.total_steps = 0
         return np.expand_dims(self._get_obs(), axis=-1)
 
-    def render(self):
+    def render(self, mode='human'):
         out = self.maze.copy()
         color_dict = {-1: 'black', 0: 'white', 1: 'red', 'E': 'green'}
         cmap = mcolors.ListedColormap(list(color_dict.values()))
