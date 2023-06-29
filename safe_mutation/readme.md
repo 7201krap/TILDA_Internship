@@ -71,7 +71,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |:----------------------------------------------:|:---------------------------------------------:|
 |  ![Image 9](results/maze%20ga%20control.png)   | ![Image 10](results/Maze%20ga%20sm-g-fo.png)  |
 |             **Maze with SM-G-SO**              |            **Maze with SM-G-SUM**             |
-| ![Image 11](results/Maze%20ga%20sm-g-so.png)   | ![Image 12](results/Maze%20ga%20sm-g-sum.png) |
+| ![Image 11](results/Maze%20ga%20sm-g-so.png)   | ![Image 12](results/maze%20ga%20sm-g-sum.png) |
 
   - BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
