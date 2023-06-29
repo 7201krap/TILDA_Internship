@@ -77,8 +77,7 @@ class PolicyNetwork(nn.Module):
 
     def act(self, state):
         print(f"Performing an optimal action for state: {state}")
-        state_t = torch.as_tensor(state, dtype=torch.float32)
-        q_values = self.forward(torch.from_numpy(state_t)).detach().numpy()
+        q_values = self.forward(torch.from_numpy(state)).detach().numpy()
         return q_values
 
     def init_weights(self, m):
@@ -226,7 +225,7 @@ import pygame
 
 # ### Version Control
 
-first_run = True
+first_run = False
 
 if first_run == True:
     population, history, history_std = main(POPULATION_SIZE=pop_size,

@@ -165,11 +165,14 @@ def perturb_parameters(network, weight_clip, n_episodes):
             sensitivity = second_order_grad
             scaling = torch.sqrt(torch.abs(sensitivity))
 
+            # mask 0% and mutate 100%
+            mask = torch.rand(gradient.shape) > 0.0
+
             # Normalize the gradients
-            so_gradient = (gradient / (scaling + 1e-10)).detach()
+            gradient[mask] = (gradient[mask] / (scaling[mask] + 1e-10))
 
             # Calculate the new parameters
-            perturbation = np.clip(delta * so_gradient, -weight_clip, weight_clip)
+            perturbation = np.clip(delta * gradient.detach(), -weight_clip, weight_clip)
             new_param = current_param + perturbation
 
             # Inject the new parameters into the model
@@ -213,7 +216,7 @@ env = gym.make("CartPole-v1")
 # Creating initial population of networks
 population = [PolicyNetwork(INPUT_DIM, OUTPUT_DIM) for _ in range(POPULATION_SIZE)]
 
-first_run = False
+first_run = True
 
 if first_run == True:
 
