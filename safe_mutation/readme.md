@@ -33,7 +33,7 @@
   - Set *first_run=False* if you want to see the visualized(=video) result.
 
 
-- See 'results' for results: visualized graphs and weights.
+- See 'results' for visualized graphs and weights.
 
 
 - In the paper, there are 5 types of mutations.
