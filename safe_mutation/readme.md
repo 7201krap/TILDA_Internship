@@ -82,4 +82,4 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |                     ![Image 14](results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/Bipedal%20ga%20sm-g-sum.png) |
 
 
-- Watch the following video for implementation details (lecture delivered in Korea by Jin Hyun Park):  
+- Watch the following video for implementation details (lecture delivered in Korean):  
