@@ -1,9 +1,9 @@
 ### Implementation of "Safe Mutation for Deep and Recurrent Neural Networks through output gradients" by Joel Lehman et al. with some modifications.
 
-- Official Implementation: https://github.com/uber-research/safemutations, Full paper: https://arxiv.org/abs/1712.06563
+- Official Implementation: https://github.com/uber-research/safemutations and Full paper: https://arxiv.org/abs/1712.06563
 
 
-- The following are important quotes from the paper:
+- The followings are important quotes from the paper:
   -  "A central reason is that while random mutation generally works in low dimensions, 
   a random perturbation of thousands or millions of weights will likely break existing functionality. 
   This paper proposes a solution: a family of safe mutation (SM) operators that facilitate exploration without 
