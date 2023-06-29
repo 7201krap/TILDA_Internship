@@ -75,11 +75,11 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 
   - BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
-|                              **BipedalWalker with Control**                               |          **BipedalWalker with SM-G-FO**          |
-|:-----------------------------------------------------------------------------------------:|:------------------------------------------------:|
-| Graph Not Available (Checked that it's performance is not greater than SM-G-SUM approach) | ![Image 13](results/bipedal%20ga%20sm-g-fo.png)  |
-|                              **BipedalWalker with SM-G-SO**                               |         **BipedalWalker with SM-G-SUM**          |
-|                      ![Image 14](results/bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/bipedal%20ga%20sm-g-sum.png) |
+|                              **BipedalWalker with Control**                              |          **BipedalWalker with SM-G-FO**          |
+|:----------------------------------------------------------------------------------------:|:------------------------------------------------:|
+| Graph Not Available (Checked that its performance is not greater than SM-G-SUM approach) | ![Image 13](results/bipedal%20ga%20sm-g-fo.png)  |
+|                              **BipedalWalker with SM-G-SO**                              |         **BipedalWalker with SM-G-SUM**          |
+|                     ![Image 14](results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/Bipedal%20ga%20sm-g-sum.png) |
 
 
 - Watch the following video for implementation details (lecture delivered in Korea by Jin Hyun Park):  
