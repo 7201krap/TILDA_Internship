@@ -47,8 +47,8 @@ There is one additional type of mutation(=SM-G-FO) that I developed:
   6. SM-G-ABS: SafeMutation-Gradient-Absolute
 
 
-- I compared Control, SM-G-FO, SM-G-SO, SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker
-  -  Advantages of SM-G-X approach over Control could be clearly observable in Cartpole, LunarLander, and Maze environment.
+- I compared Control, SM-G-FO, SM-G-SO, SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker. 
+Advantages of SM-G-X approach over Control could be clearly observable in Cartpole, LunarLander, and Maze environment. 
     - Cartpole<br>
   
 |            **Cartpole with Control**            |            **Cartpole with SM-G-FO**             |
