@@ -2,7 +2,8 @@
 
 - Official Implementation: https://github.com/uber-research/safemutations and Full paper: https://arxiv.org/abs/1712.06563
 
-- Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1MxV8bPIivNYyEFogavxtjDchkRfS0OOv?usp=sharing
+- Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1MxV8bPIivNYyEFogavxtjDchkRfS0OOv?usp=sharing (8분 30초 정도쯤에 episode라고 말했는데 episode가 아니고 step입니다.. ㅠㅠ)
+
 
 - The followings are important quotes from the paper:
   -  "A central reason is that while random mutation generally works in low dimensions, 
