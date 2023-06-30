@@ -83,4 +83,4 @@ Advantages of SM-G approach over Control could be clearly observable in Cartpole
 |                     ![Image 14](results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/Bipedal%20ga%20sm-g-sum.png) |
 
 
-4. Watch the following video for implementation details (lecture delivered in Korean):  
+4. Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1MxV8bPIivNYyEFogavxtjDchkRfS0OOv?usp=sharing
