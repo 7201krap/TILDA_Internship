@@ -48,7 +48,7 @@ There is one additional type of mutation(=SM-G-FO) that I developed:
 
 
 - I compared Control, SM-G-FO, SM-G-SO, SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker. 
-Advantages of SM-G-X approach over Control could be clearly observable in Cartpole and LunarLander environment. 
+Advantages of SM-G-X approach over Control could be clearly observable in Cartpole, LunarLander, and Maze environment. 
 
 1. Cartpole<br>
   
@@ -58,7 +58,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |            **Cartpole with SM-G-SO**            |            **Cartpole with SM-G-SUM**            |
 | ![Image 3](results/cartpole%20ga%20sm-g-so.png) | ![Image 4](results/cartpole%20ga%20sm-g-sum.png) |
 
-- LunarLander<br>
+2. LunarLander<br>
 
 |            **LunarLander with Control**             |            **LunarLander with SM-G-FO**             |
 |:---------------------------------------------------:|:---------------------------------------------------:|
@@ -66,7 +66,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |            **LunarLander with SM-G-SO**             |            **LunarLander with SM-G-SUM**            |
 | ![Image 7](results/lunarlander%20ga%20sm-g-so.png)  | ![Image 8](results/lunarlander%20ga%20sm-g-sum.png) |
 
-2. Maze<br>
+3. Maze<br>
 
 |             **Maze with Control**              |             **Maze with SM-G-FO**             |
 |:----------------------------------------------:|:---------------------------------------------:|
@@ -74,7 +74,7 @@ Advantages of SM-G-X approach over Control could be clearly observable in Cartpo
 |             **Maze with SM-G-SO**              |            **Maze with SM-G-SUM**             |
 | ![Image 11](results/Maze%20ga%20sm-g-so.png)   | ![Image 12](results/maze%20ga%20sm-g-sum.png) |
 
-3. BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
+4. BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
 |                              **BipedalWalker with Control**                              |          **BipedalWalker with SM-G-FO**          |
 |:----------------------------------------------------------------------------------------:|:------------------------------------------------:|
