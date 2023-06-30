@@ -2,6 +2,7 @@
 
 - Official Implementation: https://github.com/uber-research/safemutations and Full paper: https://arxiv.org/abs/1712.06563
 
+- Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1MxV8bPIivNYyEFogavxtjDchkRfS0OOv?usp=sharing
 
 - The followings are important quotes from the paper:
   -  "A central reason is that while random mutation generally works in low dimensions, 
@@ -82,5 +83,3 @@ Advantages of SM-G approach over Control could be clearly observable in Cartpole
 |                              **BipedalWalker with SM-G-SO**                              |         **BipedalWalker with SM-G-SUM**          |
 |                     ![Image 14](results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](results/Bipedal%20ga%20sm-g-sum.png) |
 
-
-4. Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1MxV8bPIivNYyEFogavxtjDchkRfS0OOv?usp=sharing
