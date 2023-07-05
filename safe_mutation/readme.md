@@ -57,31 +57,31 @@ Advantages of SM-G approach over Control could be clearly observable in Cartpole
   
 |            **Cartpole with Control**            |            **Cartpole with SM-G-FO**             |
 |:-----------------------------------------------:|:------------------------------------------------:|
-| ![Image 1](../safe_mutation_variant/results/cartpole%20ga%20control.png) | ![Image 2](../safe_mutation_variant/results/cartpole%20ga%20sm-g-fo.png)  |
+| ![Image 1](safe_mutation_variant/results/cartpole ga control.png) | ![Image 2](safe_mutation_variant/results/cartpole ga sm-g-fo.png)  |
 |            **Cartpole with SM-G-SO**            |            **Cartpole with SM-G-SUM**            |
-| ![Image 3](../safe_mutation_variant/results/cartpole%20ga%20sm-g-so.png) | ![Image 4](../safe_mutation_variant/results/cartpole%20ga%20sm-g-sum.png) |
+| ![Image 3](safe_mutation_variant/results/cartpole ga sm-g-so.png) | ![Image 4](safe_mutation_variant/results/cartpole ga sm-g-sum.png) |
 
 2. LunarLander<br>
 
 |            **LunarLander with Control**             |            **LunarLander with SM-G-FO**             |
 |:---------------------------------------------------:|:---------------------------------------------------:|
-| ![Image 5](../safe_mutation_variant/results/lundarlander%20ga%20control.png) | ![Image 6](../safe_mutation_variant/results/lunarlander%20ga%20sm-g-fo.png)  |
+| ![Image 5](safe_mutation_variant/results/lundarlander ga control.png) | ![Image 6](safe_mutation_variant/results/lunarlander ga sm-g-fo.png)  |
 |            **LunarLander with SM-G-SO**             |            **LunarLander with SM-G-SUM**            |
-| ![Image 7](../safe_mutation_variant/results/lunarlander%20ga%20sm-g-so.png)  | ![Image 8](../safe_mutation_variant/results/lunarlander%20ga%20sm-g-sum.png) |
+| ![Image 7](safe_mutation_variant/results/lunarlander ga sm-g-so.png)  | ![Image 8](safe_mutation_variant/results/lunarlander ga sm-g-sum.png) |
 
 3. Maze<br>
 
 |             **Maze with Control**              |             **Maze with SM-G-FO**             |
 |:----------------------------------------------:|:---------------------------------------------:|
-|  ![Image 9](../safe_mutation_variant/results/maze%20ga%20control.png)   | ![Image 10](../safe_mutation_variant/results/Maze%20ga%20sm-g-fo.png)  |
+|  ![Image 9](safe_mutation_variant/results/maze ga control.png)   | ![Image 10](safe_mutation_variant/results/Maze ga sm-g-fo.png)  |
 |             **Maze with SM-G-SO**              |            **Maze with SM-G-SUM**             |
-| ![Image 11](../safe_mutation_variant/results/Maze%20ga%20sm-g-so.png)   | ![Image 12](../safe_mutation_variant/results/maze%20ga%20sm-g-sum.png) |
+| ![Image 11](safe_mutation_variant/results/Maze ga sm-g-so.png)   | ![Image 12](safe_mutation_variant/results/maze ga sm-g-sum.png) |
 
 4. BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
 |                              **BipedalWalker with Control**                              |          **BipedalWalker with SM-G-FO**          |
 |:----------------------------------------------------------------------------------------:|:------------------------------------------------:|
-| Graph Not Available (Checked that its performance is not greater than SM-G-SUM approach) | ![Image 13](../safe_mutation_variant/results/bipedal%20ga%20sm-g-fo.png)  |
+| Graph Not Available (Checked that its performance is not greater than SM-G-SUM approach) | ![Image 13](safe_mutation_variant/results/bipedal ga sm-g-fo.png)  |
 |                              **BipedalWalker with SM-G-SO**                              |         **BipedalWalker with SM-G-SUM**          |
-|                     ![Image 14](../safe_mutation_variant/results/Bipedal%20ga%20sm-g-so.png)                      | ![Image 15](../safe_mutation_variant/results/Bipedal%20ga%20sm-g-sum.png) |
+|                     ![Image 14](safe_mutation_variant/results/Bipedal ga sm-g-so.png)                      | ![Image 15](safe_mutation_variant/results/Bipedal ga sm-g-sum.png) |
 
