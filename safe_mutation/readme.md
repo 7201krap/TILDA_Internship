@@ -52,7 +52,7 @@ There is one additional type of mutation(=SM-G-FO) that I developed:
 
 - I compared Control, SM-G-FO, SM-G-SO, and SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker. 
 Advantages of SM-G approach over Control could be clearly observable in Cartpole, LunarLander, and Maze environment. 
-
+ 
 1. Cartpole<br>
   
 |            **Cartpole with Control**            |            **Cartpole with SM-G-FO**             |
