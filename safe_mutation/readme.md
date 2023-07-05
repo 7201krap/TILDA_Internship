@@ -65,23 +65,23 @@ Advantages of SM-G approach over Control could be clearly observable in Cartpole
 
 |            **LunarLander with Control**             |            **LunarLander with SM-G-FO**             |
 |:---------------------------------------------------:|:---------------------------------------------------:|
-| ![Image 5](safe_mutation_variant/results/lundarlander ga control.png) | ![Image 6](safe_mutation_variant/results/lunarlander ga sm-g-fo.png)  |
+| <img alt="Image 5" src="safe_mutation_variant/results/lundarlander ga control.png"/> | <img alt="Image 6" src="safe_mutation_variant/results/lunarlander ga sm-g-fo.png"/>  |
 |            **LunarLander with SM-G-SO**             |            **LunarLander with SM-G-SUM**            |
-| ![Image 7](safe_mutation_variant/results/lunarlander ga sm-g-so.png)  | ![Image 8](safe_mutation_variant/results/lunarlander ga sm-g-sum.png) |
+| <img alt="Image 7" src="safe_mutation_variant/results/lunarlander ga sm-g-so.png"/>  | <img alt="Image 8" src="safe_mutation_variant/results/lunarlander ga sm-g-sum.png"/> |
 
 3. Maze<br>
 
 |             **Maze with Control**              |             **Maze with SM-G-FO**             |
 |:----------------------------------------------:|:---------------------------------------------:|
-|  ![Image 9](safe_mutation_variant/results/maze ga control.png)   | ![Image 10](safe_mutation_variant/results/Maze ga sm-g-fo.png)  |
+|  <img alt="Image 9" src="safe_mutation_variant/results/maze ga control.png"/>   | <img alt="Image 10" src="safe_mutation_variant/results/Maze ga sm-g-fo.png"/>  |
 |             **Maze with SM-G-SO**              |            **Maze with SM-G-SUM**             |
-| ![Image 11](safe_mutation_variant/results/Maze ga sm-g-so.png)   | ![Image 12](safe_mutation_variant/results/maze ga sm-g-sum.png) |
+| <img alt="Image 11" src="safe_mutation_variant/results/Maze ga sm-g-so.png"/>   | <img alt="Image 12" src="safe_mutation_variant/results/maze ga sm-g-sum.png"/> |
 
 4. BipedalWalker (Doesn't work very well to both control and SM-G-X approach)<br>
 
 |                              **BipedalWalker with Control**                              |          **BipedalWalker with SM-G-FO**          |
 |:----------------------------------------------------------------------------------------:|:------------------------------------------------:|
-| Graph Not Available (Checked that its performance is not greater than SM-G-SUM approach) | ![Image 13](safe_mutation_variant/results/bipedal ga sm-g-fo.png)  |
+| Graph Not Available (Checked that its performance is not greater than SM-G-SUM approach) | <img alt="Image 13" src="safe_mutation_variant/results/bipedal ga sm-g-fo.png"/>  |
 |                              **BipedalWalker with SM-G-SO**                              |         **BipedalWalker with SM-G-SUM**          |
-|                     ![Image 14](safe_mutation_variant/results/Bipedal ga sm-g-so.png)                      | ![Image 15](safe_mutation_variant/results/Bipedal ga sm-g-sum.png) |
+|                     <img alt="Image 14" src="safe_mutation_variant/results/Bipedal ga sm-g-so.png"/>                      | <img alt="Image 15" src="safe_mutation_variant/results/Bipedal ga sm-g-sum.png"/> |
 
