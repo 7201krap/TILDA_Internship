@@ -55,11 +55,11 @@ Advantages of SM-G approach over Control could be clearly observable in Cartpole
  
 1. Cartpole<br>
   
-|            **Cartpole with Control**            |            **Cartpole with SM-G-FO**             |
-|:-----------------------------------------------:|:------------------------------------------------:|
-| ![Image 1](safe_mutation_variant/results/cartpole ga control.png) | ![Image 2](safe_mutation_variant/results/cartpole ga sm-g-fo.png)  |
-|            **Cartpole with SM-G-SO**            |            **Cartpole with SM-G-SUM**            |
-| ![Image 3](safe_mutation_variant/results/cartpole ga sm-g-so.png) | ![Image 4](safe_mutation_variant/results/cartpole ga sm-g-sum.png) |
+|                     **Cartpole with Control**                     |            **Cartpole with SM-G-FO**             |
+|:-----------------------------------------------------------------:|:------------------------------------------------:|
+| <img alt="Image 1" src="safe_mutation_variant/results/cartpole ga control.png"/> | <img alt="Image 2" src="safe_mutation_variant/results/cartpole ga sm-g-fo.png"/>  |
+|                     **Cartpole with SM-G-SO**                     |            **Cartpole with SM-G-SUM**            |
+| <img alt="Image 3" src="safe_mutation_variant/results/cartpole ga sm-g-so.png"/> | <img alt="Image 4" src="safe_mutation_variant/results/cartpole ga sm-g-sum.png"/> |
 
 2. LunarLander<br>
 
