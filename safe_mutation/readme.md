@@ -2,6 +2,8 @@
 
 - Official Implementation: https://github.com/uber-research/safemutations and Full paper: https://arxiv.org/abs/1712.06563
 
+- Note that results below are the results that generated from safe_mutation_variant. However, the results is very similar to the original implementation.
+
 - Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1GTIesw6HvqRhNw9fCnT7HrU3Yxq39TE9?usp=sharing
 
 - See the following for the paper explanation (written in Korean): https://docs.google.com/document/d/1gFjd3-4RwQ30fUAacXsCk7DIDtWMjfhS9XjNRLo4Xec/edit?usp=sharing 
