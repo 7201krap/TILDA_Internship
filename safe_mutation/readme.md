@@ -1,14 +1,14 @@
-### Implementation of "Safe Mutation for Deep and Recurrent Neural Networks through output gradients" by Joel Lehman et al. with some modifications.
+### Implementation of "Safe Mutation for Deep and Recurrent Neural Networks through Output gradients" by Joel Lehman et al. with some modifications.
 
 - Official Implementation: https://github.com/uber-research/safemutations and Full paper: https://arxiv.org/abs/1712.06563
 
-- Note that results below are the results that generated from safe_mutation_variant. However, the results is very similar to the original implementation.
+- Note that the results below are the results generated from safe_mutation_variant. However, the results are very similar to the original implementation.
 
 - Watch the following video for implementation details (lecture delivered in Korean): https://drive.google.com/drive/folders/1GTIesw6HvqRhNw9fCnT7HrU3Yxq39TE9?usp=sharing
 
 - See the following for the paper explanation (written in Korean): https://docs.google.com/document/d/1gFjd3-4RwQ30fUAacXsCk7DIDtWMjfhS9XjNRLo4Xec/edit?usp=sharing 
 
-- The followings are important quotes from the paper:
+- The following are important quotes from the paper:
   -  "A central reason is that while random mutation generally works in low dimensions, 
   a random perturbation of thousands or millions of weights will likely break existing functionality. 
   This paper proposes a solution: a family of safe mutation (SM) operators that facilitate exploration without 
@@ -44,7 +44,7 @@
 - In the paper, there are 5 types of mutations.
 1 through 4 are implemented and 5 and 6 are not implemented in this repository.
 There is one additional type of mutation(=SM-G-FO) that I developed:
-  1. Control: Entire parameter vector is perturbed with fixed-variance Gaussian noise.
+  1. Control: The entire parameter vector is perturbed with fixed-variance Gaussian noise.
   2. SM-G-FO: SafeMutation-Gradient-FirstOrder
   3. SM-G-SO: SafeMutation-Gradient-SecondOrder
   4. SM-G-SUM: SafeMutation-Gradient-Summation
@@ -53,7 +53,7 @@ There is one additional type of mutation(=SM-G-FO) that I developed:
 
 
 - I compared Control, SM-G-FO, SM-G-SO, and SM-G-SUM with different environments: Cartpole, LunarLander, Maze, and BipedalWalker. 
-Advantages of SM-G approach over Control could be clearly observable in Cartpole, LunarLander, and Maze environment. 
+The advantages of SM-G approach over Control could be clearly observable in the Cartpole, LunarLander, and Maze environment. 
  
 1. Cartpole<br>
   
